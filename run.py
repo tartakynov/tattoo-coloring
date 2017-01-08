@@ -1,11 +1,31 @@
 #!/usr/bin/env python
 
 from Tkinter import *
-from PIL import ImageTk, Image
-import os
+from PIL import Image, ImageTk
+
+class App(Frame):
+    def __init__(self, master):
+        Frame.__init__(self, master)
+        self.columnconfigure(0, weight = 1)
+        self.rowconfigure(0, weight = 1)
+        self.original = Image.open('tattoo.jpg')
+        self.image = ImageTk.PhotoImage(self.original)
+        self.display = Canvas(self, bd = 0, highlightthickness = 0)
+        self.display.create_image(0, 0, image = self.image, anchor = NW, tags = "IMG")
+        self.display.grid(row = 0, sticky = W + E + N + S)
+        self.pack(fill = BOTH, expand = 1)
+        self.bind("<Configure>", self.resize)
+
+    def resize(self, event):
+        size = (event.width, event.height)
+        resized = self.original.resize(size, Image.ANTIALIAS)
+        self.image = ImageTk.PhotoImage(resized)
+        self.display.delete("IMG")
+        self.display.create_image(0, 0, image = self.image, anchor = NW, tags = "IMG")
 
 if __name__ == "__main__":
     root = Tk()
-    img = ImageTk.PhotoImage(Image.open("tattoo.jpg"))
-    imglabel = Label(root, image = img).grid(row = 1, column = 1)
-    root.mainloop()
+    root.geometry('1024x960')
+    app = App(root)
+    app.mainloop()
+    root.destroy()
