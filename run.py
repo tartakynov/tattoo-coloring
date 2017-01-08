@@ -4,6 +4,8 @@ from Tkinter import *
 from PIL import Image, ImageTk
 from itertools import cycle
 
+from experiment import Experiment
+
 class App(Frame):
     def __init__(self, master, images, size, min_marks = 2, **args):
         Frame.__init__(self, master, **args)
@@ -57,10 +59,25 @@ class App(Frame):
         self.refresh_picture()
         self.mainloop()
 
+# todo
+# UI:
+#   menu:
+#     start new experiment
+#     open an experiment (experiment is a folder with image, masks and history)
+#   layout:
+#     6 pictures: 2 rows, 3 columns
+#     each picture is clickable
+#   buttons
+#     next iteration
+# GA:
+#   read image and masks
+#   try to generate image with random colors
+#
+
 if __name__ == "__main__":
     size = (600, 600)
     root = Tk()
     root.title('Tattoo Coloring')
-    images = [Image.open('tattoo.jpg'), Image.open('studio.jpg')]
+    images = [Image.open('experiments/first/tattoo.jpg')]
     app = App(root, images = images, size = size, bd = 3, relief = SUNKEN)
     app.run()
