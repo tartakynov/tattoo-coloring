@@ -25,7 +25,6 @@ class App(Frame):
         Button(self, text = 'Prev', command = self.on_prev).pack(fill = X)
         self.mark_button = Button(self, text = 'Mark', command = self.on_mark)
         self.mark_button.pack(fill = X)
-        Button(self, text = 'Quit', command = self.on_quit).pack(fill = X, side = BOTTOM)
 
     def refresh_marks(self):
         at_least = max(0, self.min_marks - len(self.marked))
@@ -54,16 +53,12 @@ class App(Frame):
             self.marked.remove(self.pos)
         self.refresh_marks()
 
-    def on_quit(self):
-        self.update()
-        self.quit()
-
     def run(self):
         self.refresh_picture()
         self.mainloop()
 
 if __name__ == "__main__":
-    size = (1024, 768)
+    size = (600, 600)
     root = Tk()
     root.title('Tattoo Coloring')
     images = [Image.open('tattoo.jpg'), Image.open('studio.jpg')]
